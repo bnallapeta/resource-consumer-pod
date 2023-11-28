@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: resource-consumer
+spec:
+  schedule: "*/5 * * * *"  # This runs the job every 5 minutes
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: resource-consumer
+            image: ghcr.io/stakater/mto/resource-consumer:latest 
+            imagePullPolicy: Always
+            resources:
+              requests:
+                memory: "500Mi"
+                cpu: "500m"
+              limits:
+                memory: "1000Mi"
+                cpu: "1000m"
+          restartPolicy: Never
+
